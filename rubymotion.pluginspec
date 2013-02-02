@@ -7,7 +7,7 @@ Jenkins::Plugin::Specification.new do |plugin|
   # You should create a wiki-page for your plugin when you publish it, see
   # https://wiki.jenkins-ci.org/display/JENKINS/Hosting+Plugins#HostingPlugins-AddingaWikipage
   # This line makes sure it's listed in your POM.
-  plugin.url = 'https://wiki.jenkins-ci.org/display/JENKINS/Rubymotion+Plugin'
+  plugin.url = 'https://wiki.jenkins-ci.org/display/JENKINS/Jenkins+RubyMotion+Plugin'
 
   # The first argument is your user name for jenkins-ci.org.
   plugin.developed_by "watson1978", "Watson <watson1978@gmail.com>"
