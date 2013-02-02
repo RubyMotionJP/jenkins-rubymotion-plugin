@@ -2,7 +2,7 @@ require "tempfile"
 
 class RubymotionBuilder < Jenkins::Tasks::Builder
 
-    display_name "Rubymotion"
+    display_name "RubyMotion"
 
     attr_accessor :device_family_type
     attr_accessor :output_style_type
