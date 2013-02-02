@@ -1,0 +1,44 @@
+<%
+f = taglib("/lib/form")
+
+f.entry(:title => 'Rake task', :field => 'rake_task') do
+%>
+  <select name='rake_task_type'>
+    <option value="spec">spec</option>
+  </select>
+<%
+end
+
+f.entry(:title => 'Device family', :field => 'device_family') do
+%>
+  <select name='device_family_type'>
+    <option value="iphone">iPhone</option>
+    <option value="ipad">iPad</option>
+  </select>
+<%
+end
+
+f.entry(:title => 'Output Style', :field => 'output_style') do
+%>
+  <select name='output_style_type'>
+    <option value="spec_dox">spec_dox</option>
+    <option value="fast">fast</option>
+    <option value="tap">tap</option>
+    <option value="test_unit">test_unit</option>
+    <option value="knock">knock</option>
+  </select>
+<%
+end
+
+f.entry(:title => 'Output File Name', :field => 'output_file_name') do
+  f.readOnlyTextbox(:value => 'result.txt')
+end
+
+f.block do
+  f.checkbox(:title => 'Use bundler', :field => 'use_bundler')
+end
+
+f.block do
+  f.checkbox(:title => 'Need clean', :field => 'need_clean')
+end
+%>
