@@ -5,6 +5,7 @@ class RubymotionBuilder < Jenkins::Tasks::Builder
     display_name "RubyMotion"
 
     attr_accessor :device_family_type
+    attr_accessor :retina_mode
     attr_accessor :output_style_type
     attr_accessor :rbenv
     attr_accessor :use_bundler
@@ -17,6 +18,7 @@ class RubymotionBuilder < Jenkins::Tasks::Builder
       @output_style_type  = attrs['output_style_type']
       @output_file_name   = attrs['output_file_name']
       @device_family_type = attrs['device_family_type']
+      @retina_mode        = attrs['retina_mode']
       @use_bundler        = attrs['use_bundler']
       @rbenv              = attrs['rbenv']
       @rbenv_version      = attrs['rbenv_version']
@@ -59,6 +61,7 @@ class RubymotionBuilder < Jenkins::Tasks::Builder
       rake = "bundle exec #{rake}" if @use_bundler
 
       rake << " device_family=#{@device_family_type}"
+      rake << " retina=#{@retina_mode}"
       rake << " output=#{@output_style_type}"
 
       stderr_file = Tempfile.new("stderr")

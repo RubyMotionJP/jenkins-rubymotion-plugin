@@ -18,6 +18,17 @@ f.entry(:title => 'Device family', :field => 'device_family') do
 <%
 end
 
+f.entry(:title => 'Retina', :field => 'retina') do
+%>
+  <select name='retina_mode'>
+    <option value="false">off</option>
+    <option value="true">on</option>
+    <option value="3.5">on (3.5-inch)</option>
+    <option value="4">on (4-inch)</option>
+  </select>
+<%
+end
+
 f.entry(:title => 'Output Style', :field => 'output_style') do
 %>
   <select name='output_style_type'>
