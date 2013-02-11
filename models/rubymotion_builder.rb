@@ -8,7 +8,6 @@ class RubymotionBuilder < Jenkins::Tasks::Builder
     attr_accessor :retina_mode
     attr_accessor :output_style_type
     attr_accessor :simulator_version
-    attr_accessor :rbenv
     attr_accessor :use_bundler
     attr_accessor :need_clean
 
@@ -22,8 +21,6 @@ class RubymotionBuilder < Jenkins::Tasks::Builder
       @simulator_version  = attrs['simulator_version']
       @retina_mode        = attrs['retina_mode']
       @use_bundler        = attrs['use_bundler']
-      @rbenv              = attrs['rbenv']
-      @rbenv_version      = attrs['rbenv_version']
       @need_clean         = attrs['need_clean']
     end
 
