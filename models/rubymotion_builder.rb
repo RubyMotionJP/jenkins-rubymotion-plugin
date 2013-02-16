@@ -47,7 +47,8 @@ class RubymotionBuilder < Jenkins::Tasks::Builder
     def perform(build, launcher, listener)
       # actually perform the build step
       env = build.native.getEnvironment()
-      path = env['PATH'].sub(/:$/, '')
+      path = env['PATH+RBENV'] || env['PATH+RVM'] || env['PATH'] || ""
+      path.sub!(/:+$/, '')
       path = path + ":" if path.length > 0
       path = path + "/usr/bin:/bin"
       lang = env['LANG']
