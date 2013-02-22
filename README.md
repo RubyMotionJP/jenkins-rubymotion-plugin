@@ -15,8 +15,8 @@ RubyMotion build plugin for Jenkins
 ## Setup
 
 ```
-$ rbenv install jruby-1.7.2
-$ rbenv shell jruby-1.7.2
+$ rbenv install jruby-1.7.3
+$ rbenv shell jruby-1.7.3
 $ gem install jpi
 ```
 
