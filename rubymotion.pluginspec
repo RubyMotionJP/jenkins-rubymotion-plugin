@@ -1,7 +1,7 @@
 Jenkins::Plugin::Specification.new do |plugin|
   plugin.name = "rubymotion"
   plugin.display_name = "Jenkins RubyMotion Plugin"
-  plugin.version = '0.6'
+  plugin.version = '0.7'
   plugin.description = 'This plugin integrates RubyMotion with Jenkins.'
 
   # You should create a wiki-page for your plugin when you publish it, see
