@@ -57,7 +57,7 @@ class RubymotionBuilder < Jenkins::Tasks::Builder
       if @need_clean
         rake = "rake clean"
         rake = "bundle exec #{rake}" if @use_bundler
-        launcher.execute("bash", "-c", "export LANG=#{lang}; export PATH=#{path}; #{rake}", {:chdir => @workspace, :out => listener})
+        execute("export LANG=#{lang}; export PATH=#{path}; #{rake}", launcher, listener)
       end
 
       rake = "rake #{@rake_task_type}"
@@ -71,10 +71,15 @@ class RubymotionBuilder < Jenkins::Tasks::Builder
       stderr_file = Tempfile.new("stderr")
       rake << " SIM_STDOUT_PATH=#{@output_file_path.shellescape} SIM_STDERR_PATH=#{stderr_file.path.shellescape}"
 
-      launcher.execute("bash", "-c", "export LANG=#{lang}; export PATH=#{path}; #{rake}", {:chdir => @workspace, :out => listener})
+      execute("export LANG=#{lang}; export PATH=#{path}; #{rake}", launcher, listener)
       stderr_file.close
 
       listener << File.read(@output_file_path)
     end
 
+    private
+
+    def execute(command, launcher, listener)
+      launcher.execute("bash", "-c", command, {:chdir => @workspace, :out => listener})
+    end
 end
