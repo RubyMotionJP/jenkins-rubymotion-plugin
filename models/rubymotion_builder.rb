@@ -1,4 +1,5 @@
 require "tempfile"
+require "shellwords"
 
 class RubymotionBuilder < Jenkins::Tasks::Builder
 
@@ -68,7 +69,7 @@ class RubymotionBuilder < Jenkins::Tasks::Builder
       rake << " output=#{@output_style_type}"
 
       stderr_file = Tempfile.new("stderr")
-      rake << " SIM_STDOUT_PATH=#{@output_file_path} SIM_STDERR_PATH=#{stderr_file.path}"
+      rake << " SIM_STDOUT_PATH=#{@output_file_path.shellescape} SIM_STDERR_PATH=#{stderr_file.path.shellescape}"
 
       launcher.execute("bash", "-c", "export LANG=#{lang}; export PATH=#{path}; #{rake}", {:chdir => @workspace, :out => listener})
       stderr_file.close
