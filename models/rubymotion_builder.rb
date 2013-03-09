@@ -5,24 +5,27 @@ class RubymotionBuilder < Jenkins::Tasks::Builder
 
     display_name "RubyMotion"
 
-    attr_accessor :device_family_type
-    attr_accessor :retina_mode
-    attr_accessor :output_style_type
-    attr_accessor :simulator_version
-    attr_accessor :use_bundler
-    attr_accessor :need_clean
+    PROPERTIES = %w(
+      rake_task_type
+      output_style_type
+      output_file_name
+      device_family_type
+      simulator_version
+      retina_mode
+      use_bundler
+      need_clean
+    )
+
+    PROPERTIES.each do |prop|
+      attr_accessor prop.to_sym
+    end
 
     # Invoked with the form parameters when this extension point
     # is created from a configuration screen.
     def initialize(attrs = {})
-      @rake_task_type     = attrs['rake_task_type']
-      @output_style_type  = attrs['output_style_type']
-      @output_file_name   = attrs['output_file_name']
-      @device_family_type = attrs['device_family_type']
-      @simulator_version  = attrs['simulator_version']
-      @retina_mode        = attrs['retina_mode']
-      @use_bundler        = attrs['use_bundler']
-      @need_clean         = attrs['need_clean']
+      PROPERTIES.each do |prop|
+        self.instance_variable_set("@#{prop}", attrs[prop])
+      end
     end
 
     ##
