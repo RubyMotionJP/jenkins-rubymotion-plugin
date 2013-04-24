@@ -53,7 +53,7 @@ class RubymotionBuilder < Jenkins::Tasks::Builder
       # actually perform the build step
       env = build.native.getEnvironment()
       if @custom_bin_path.to_s.length > 0
-        path = File.expand_path(@custom_bin_path)
+        path = @custom_bin_path
       else
         path = env['PATH+RBENV'] || env['PATH+RVM'] || env['PATH'] || "" 
       end
