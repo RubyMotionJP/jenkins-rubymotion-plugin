@@ -63,6 +63,11 @@ class RubymotionBuilder < Jenkins::Tasks::Builder
         execute("export LANG=#{lang}; export PATH=#{path}; #{rake}", launcher, listener)
       end
 
+      if @use_bundler
+        cmd = "bundle install"
+        execute("export LANG=#{lang}; export PATH=#{path}; #{cmd}", launcher, listener)
+      end
+
       rake = "rake #{@rake_task_type}"
       rake = "bundle exec #{rake}" if @use_bundler
 
