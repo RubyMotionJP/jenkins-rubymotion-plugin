@@ -6,6 +6,7 @@ class RubymotionBuilder < Jenkins::Tasks::Builder
     display_name "RubyMotion"
 
     PROPERTIES = %w(
+      custom_bin_path
       rake_task_type
       output_style_type
       output_file_name
@@ -51,7 +52,11 @@ class RubymotionBuilder < Jenkins::Tasks::Builder
     def perform(build, launcher, listener)
       # actually perform the build step
       env = build.native.getEnvironment()
-      path = env['PATH+RBENV'] || env['PATH+RVM'] || env['PATH'] || ""
+      if @custom_bin_path.to_s.length > 0
+        path = File.expand_path(@custom_bin_path)
+      else
+        path = env['PATH+RBENV'] || env['PATH+RVM'] || env['PATH'] || "" 
+      end
       path.sub!(/:+$/, '')
       path = path + ":" if path.length > 0
       path = path + "/usr/bin:/bin"

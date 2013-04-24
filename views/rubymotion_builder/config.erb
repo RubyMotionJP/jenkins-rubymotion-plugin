@@ -41,6 +41,10 @@ f.entry(:title => 'Output Style', :field => 'output_style') do
 <%
 end
 
+f.entry(:title => 'Custom binary PATH', :field => 'custom_bin_path', :description => "Specify custom binary PATH for rake. When empty, use default PATH (ie. '/usr/bin:/bin').") do
+  f.textbox()
+end
+
 f.entry(:title => 'Simulator version', :field => 'simulator_version', :description => "Specify using simulator version. When empty, use default version. (ex. '5.1')") do
   f.textbox()
 end
