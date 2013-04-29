@@ -87,6 +87,9 @@ class RubymotionBuilder < Jenkins::Tasks::Builder
       execute("export LANG=#{lang}; export PATH=#{path}; #{rake}", launcher, listener)
       stderr_file.close
 
+      if File.size(@output_file_path) == 0
+        build.abort("Output file is empty")
+      end
       listener << File.read(@output_file_path)
     end
 
