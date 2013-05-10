@@ -90,7 +90,11 @@ class RubymotionBuilder < Jenkins::Tasks::Builder
       if File.size(@output_file_path) == 0
         build.abort("Output file is empty")
       end
-      listener << File.read(@output_file_path)
+      result = File.read(@output_file_path)
+      if @output_style_type != "knock"
+        build.abort("No complete result") unless result.lines.to_a.last =~ /\d+ failures, \d+ errors$/
+      end
+      listener << result
     end
 
     private
