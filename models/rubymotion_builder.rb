@@ -76,9 +76,11 @@ class RubymotionBuilder < Jenkins::Tasks::Builder
       rake = "rake #{@rake_task_type}"
       rake = "bundle exec #{rake}" if @use_bundler
 
-      rake << " target=#{@simulator_version}" if @simulator_version.to_s.length > 0
+      if @simulator_version.to_s.length > 0
+        rake << " target=#{@simulator_version}"
+        rake << " retina=#{@retina_mode}"
+      end
       rake << " device_family=#{@device_family_type}"
-      rake << " retina=#{@retina_mode}"
       rake << " output=#{@output_style_type}"
 
       stderr_file = Tempfile.new("stderr")
