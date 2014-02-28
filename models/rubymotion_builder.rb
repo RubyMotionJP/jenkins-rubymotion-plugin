@@ -6,7 +6,6 @@ class RubymotionBuilder < Jenkins::Tasks::Builder
     display_name "RubyMotion"
 
     PROPERTIES = %w(
-      platform_type
       custom_bin_path
       rake_task_type
       output_style_type
@@ -54,32 +53,39 @@ class RubymotionBuilder < Jenkins::Tasks::Builder
       # actually perform the build step
       env = build.native.getEnvironment()
       if @custom_bin_path.to_s.length > 0
-        @path = @custom_bin_path
+        path = @custom_bin_path
       else
-        @path = env['PATH+RBENV'] || env['PATH+RVM'] || env['PATH'] || ""
+        path = env['PATH+RBENV'] || env['PATH+RVM'] || env['PATH'] || "" 
       end
-      @path.sub!(/:+$/, '')
-      @path = @path + ":" if @path.length > 0
-      @path = @path + "/usr/bin:/bin"
-      @lang = env['LANG']
+      path.sub!(/:+$/, '')
+      path = path + ":" if path.length > 0
+      path = path + "/usr/bin:/bin"
+      lang = env['LANG']
 
       if @use_bundler
         cmd = "bundle install"
-        execute("export LANG=#{@lang}; export PATH=#{@path}; #{cmd}", launcher, listener)
+        execute("export LANG=#{lang}; export PATH=#{path}; #{cmd}", launcher, listener)
       end
 
       if @need_clean
         rake = "rake clean"
         rake = "bundle exec #{rake}" if @use_bundler
-        execute("export LANG=#{@lang}; export PATH=#{@path}; #{rake}", launcher, listener)
+        execute("export LANG=#{lang}; export PATH=#{path}; #{rake}", launcher, listener)
       end
 
-      case @platform_type
-      when "ios"
-        execute_ios_platform(build, launcher, listener)
-      when "osx"
-        execute_osx_platform(build, launcher, listener)
-      end
+      rake = "rake #{@rake_task_type}"
+      rake = "bundle exec #{rake}" if @use_bundler
+
+      rake << " target=#{@simulator_version}" if @simulator_version.to_s.length > 0
+      rake << " device_family=#{@device_family_type}"
+      rake << " retina=#{@retina_mode}"
+      rake << " output=#{@output_style_type}"
+
+      stderr_file = Tempfile.new("stderr")
+      rake << " SIM_STDOUT_PATH=#{@output_file_path.shellescape} SIM_STDERR_PATH=#{stderr_file.path.shellescape}"
+
+      execute("export LANG=#{lang}; export PATH=#{path}; #{rake}", launcher, listener)
+      stderr_file.close
 
       if File.size(@output_file_path) == 0
         build.abort("Output file is empty")
@@ -92,31 +98,6 @@ class RubymotionBuilder < Jenkins::Tasks::Builder
     end
 
     private
-
-    def execute_ios_platform(build, launcher, listener)
-      rake = "rake #{@rake_task_type}"
-      rake = "bundle exec #{rake}" if @use_bundler
-
-      rake << " target=#{@simulator_version}" if @simulator_version.to_s.length > 0
-      rake << " device_family=#{@device_family_type}"
-      rake << " retina=#{@retina_mode}"
-      rake << " output=#{@output_style_type}"
-
-      stderr_file = Tempfile.new("stderr")
-      rake << " SIM_STDOUT_PATH=#{@output_file_path.shellescape} SIM_STDERR_PATH=#{stderr_file.path.shellescape}"
-
-      execute("export LANG=#{@lang}; export PATH=#{@path}; #{rake}", launcher, listener)
-      stderr_file.close
-    end
-
-    def execute_osx_platform(build, launcher, listener)
-      rake = "rake #{@rake_task_type}"
-      rake = "bundle exec #{rake}" if @use_bundler
-      rake << " output=#{@output_style_type}"
-      rake << " > #{@output_file_path}"
-
-      execute("export LANG=#{@lang}; export PATH=#{@path}; #{rake}", launcher, listener)
-    end
 
     def execute(command, launcher, listener)
       launcher.execute("bash", "-c", command, {:chdir => @workspace, :out => listener})

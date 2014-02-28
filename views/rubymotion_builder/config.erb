@@ -1,15 +1,6 @@
 <%
 f = taglib("/lib/form")
 
-f.entry(:title => 'Platform', :field => 'platform') do
-%>
-  <select name='platform_type'>
-    <option value="ios">iOS</option>
-    <option value="osx">OS X</option>
-  </select>
-<%
-end
-
 f.entry(:title => 'Rake task', :field => 'rake_task') do
 %>
   <select name='rake_task_type'>
@@ -18,7 +9,7 @@ f.entry(:title => 'Rake task', :field => 'rake_task') do
 <%
 end
 
-f.entry(:title => 'Device family', :field => 'device_family', :description => 'iOS only') do
+f.entry(:title => 'Device family', :field => 'device_family') do
 %>
   <select name='device_family_type'>
     <option value="iphone">iPhone</option>
@@ -27,7 +18,7 @@ f.entry(:title => 'Device family', :field => 'device_family', :description => 'i
 <%
 end
 
-f.entry(:title => 'Retina', :field => 'retina', :description => 'iOS only') do
+f.entry(:title => 'Retina', :field => 'retina') do
 %>
   <select name='retina_mode'>
     <option value="false">off</option>
