@@ -11,7 +11,7 @@ GEM
       jenkins-war (> 1.427)
       rubyzip
       thor
-    json (1.8.0-java)
+    json (1.8.1-java)
     rubyzip (0.9.9)
     slop (3.0.4)
     thor (0.18.1)
