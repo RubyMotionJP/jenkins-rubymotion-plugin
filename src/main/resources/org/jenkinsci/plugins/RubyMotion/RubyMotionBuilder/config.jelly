@@ -8,20 +8,8 @@
     <f:select />
   </f:entry>
 
-  <f:entry title="Device family" field="deviceFamily" description="iOS Platform only">
-    <f:select />
-  </f:entry>
-
-  <f:entry title="Retina" field="retina" description="Retina need a configuration of 'Simulator version'. iOS Platform only">
-    <f:select />
-  </f:entry>
-
   <f:entry title="Output Style" field="outputStyle">
     <f:select />
-  </f:entry>
-
-  <f:entry title="Simulator version" field="simulatorVersion" description="Specify using simulator version. When empty, use default version. (ex. '5.1'). iOS Platform only">
-    <f:textbox />
   </f:entry>
 
   <f:entry title="Output File Name" field="outputFileName">
@@ -35,4 +23,19 @@
   <f:block>
     <f:checkbox title="Need clean" field="needClean" checked="${instance.needClean}" />
   </f:block>
+
+  <f:advanced title="Advanced for iOS Platform" align="left">
+    <f:entry title="Device family" field="deviceFamily">
+      <f:select />
+    </f:entry>
+
+    <f:entry title="Retina" field="retina" description="Retina need a configuration of 'Simulator version'.">
+      <f:select />
+    </f:entry>
+
+    <f:entry title="Simulator version" field="simulatorVersion" description="Specify using simulator version. When empty, use default version. (ex. '5.1').">
+      <f:textbox />
+    </f:entry>
+  </f:advanced>
+
 </j:jelly>

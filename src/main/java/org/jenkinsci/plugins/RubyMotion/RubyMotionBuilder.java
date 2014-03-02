@@ -22,26 +22,26 @@ public class RubyMotionBuilder extends Builder {
 
     private final String platform;
     private final String rakeTask;
-    private final String deviceFamily;
-    private final String retina;
     private final String outputStyle;
-    private final String simulatorVersion;
     private final String outputFileName;
     private final boolean useBundler;
     private final boolean needClean;
+    private final String deviceFamily;
+    private final String retina;
+    private final String simulatorVersion;
 
     // Fields in config.jelly must match the parameter names in the "DataBoundConstructor"
     @DataBoundConstructor
-    public RubyMotionBuilder(String platform, String rakeTask, String deviceFamily, String retina, String outputStyle, String simulatorVersion, String outputFileName, boolean useBundler, boolean needClean) {
+    public RubyMotionBuilder(String platform, String rakeTask, String outputStyle, String outputFileName, boolean useBundler, boolean needClean, String deviceFamily, String retina, String simulatorVersion) {
         this.platform = platform;
         this.rakeTask = rakeTask;
-        this.deviceFamily = deviceFamily;
-        this.retina = retina;
         this.outputStyle = outputStyle;
-        this.simulatorVersion = simulatorVersion;
         this.outputFileName = outputFileName;
         this.useBundler = useBundler;
         this.needClean = needClean;
+        this.deviceFamily = deviceFamily;
+        this.retina = retina;
+        this.simulatorVersion = simulatorVersion;
     }
 
     public String getPlatform() {
