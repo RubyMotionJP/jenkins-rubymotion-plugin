@@ -153,7 +153,11 @@ public class RubyMotionBuilder extends Builder {
         if (simulatorVersion.length() > 0) {
             cmds = cmds + " target=" + simulatorVersion;
         }
-        if (retina.length() > 0) {
+
+        if (deviceFamily.equals("ipad")) {
+            cmds = cmds + " retina=" + retina;
+        }
+        else if (retina.length() > 0) {
             if (simulatorVersion.length() > 0) {
                 cmds = cmds + " retina=" + retina;
             }
