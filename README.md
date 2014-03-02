@@ -3,26 +3,3 @@
 RubyMotion build plugin for Jenkins
 
 ![ScreenShot](https://raw.github.com/Watson1978/jenkins-rubymotion-plugin/master/screenshot/rubymotion-plugin.png)
-
-
-# Requirements
-
-- ruby-runtime plugin
-
-
-# Build
-
-## Setup
-
-```
-$ rbenv install jruby-1.7.5
-$ rbenv shell jruby-1.7.5
-$ gem install bundler
-$ bundle install
-```
-
-## Build the plugin
-
-```
-$ jpi build
-```

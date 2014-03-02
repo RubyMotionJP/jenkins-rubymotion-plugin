@@ -1,0 +1,38 @@
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form">
+
+  <f:entry title="Platform" field="platform">
+    <f:select />
+  </f:entry>
+
+  <f:entry title="Rake task" field="rakeTask">
+    <f:select />
+  </f:entry>
+
+  <f:entry title="Device family" field="deviceFamily" description="iOS Platform only">
+    <f:select />
+  </f:entry>
+
+  <f:entry title="Retina" field="retina" description="Retina need a configuration of 'Simulator version'. iOS Platform only">
+    <f:select />
+  </f:entry>
+
+  <f:entry title="Output Style" field="outputStyle">
+    <f:select />
+  </f:entry>
+
+  <f:entry title="Simulator version" field="simulatorVersion" description="Specify using simulator version. When empty, use default version. (ex. '5.1'). iOS Platform only">
+    <f:textbox />
+  </f:entry>
+
+  <f:entry title="Output File Name" field="outputFileName">
+    <f:readOnlyTextbox value=".jenkins-result" />
+  </f:entry>
+
+  <f:block>
+    <f:checkbox title="Use bundler" field="useBundler" checked="${instance.useBundler}" />
+  </f:block>
+
+  <f:block>
+    <f:checkbox title="Need clean" field="needClean" checked="${instance.needClean}" />
+  </f:block>
+</j:jelly>
