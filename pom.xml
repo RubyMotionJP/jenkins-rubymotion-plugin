@@ -8,7 +8,7 @@
 
   <groupId>org.jenkins-ci.ruby-plugins</groupId>
   <artifactId>rubymotion</artifactId>
-  <version>1.0-SNAPSHOT</version>
+  <version>1.0</version>
   <name>Jenkins RubyMotion Plugin</name>
   <description>This plugin integrates RubyMotion with Jenkins.</description>
   <packaging>hpi</packaging>
