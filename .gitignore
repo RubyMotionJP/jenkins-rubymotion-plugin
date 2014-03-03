@@ -37,3 +37,5 @@ jenkins_*.changes
 *.deb
 push-build.sh
 
+pom.xml.releaseBackup
+release.properties
