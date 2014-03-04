@@ -16,7 +16,8 @@ import org.kohsuke.stapler.QueryParameter;
 import javax.servlet.ServletException;
 import java.io.IOException;
 import java.io.File;
-import java.io.FileOutputStream;
+
+import org.jenkinsci.plugins.RubyMotion.RubyMotionCommandLauncher;
 
 public class RubyMotionBuilder extends Builder {
 
@@ -83,10 +84,11 @@ public class RubyMotionBuilder extends Builder {
     @Override
     public boolean perform(AbstractBuild build, Launcher launcher, BuildListener listener) {
         boolean result;
+        RubyMotionCommandLauncher cmdLauncher = new RubyMotionCommandLauncher(build, launcher, listener);
 
         if (useBundler) {
             String cmds = "bundle install";
-            result = exec(cmds, build, launcher, listener);
+            result = cmdLauncher.exec(cmds);
             if (!result) {
                 return false;
             }
@@ -98,22 +100,22 @@ public class RubyMotionBuilder extends Builder {
                 cmds = "bundle exec ";
             }
             cmds = cmds + "rake clean";
-            result = exec(cmds, build, launcher, listener);
+            result = cmdLauncher.exec(cmds);
             if (!result) {
                 return false;
             }
         }
 
         if (platform.equals("ios")) {
-            return execiOS(build, launcher, listener);
+            return execiOS(cmdLauncher);
         }
         else if (platform.equals("osx")) {
-            return execOSX(build, launcher, listener);
+            return execOSX(cmdLauncher);
         }
         return false;
     }
 
-    private boolean execOSX(AbstractBuild build, Launcher launcher, BuildListener listener) {
+    private boolean execOSX(RubyMotionCommandLauncher cmdLauncher) {
         String cmds = "rake ";
         if (getUseBundler()) {
             cmds = "bundle exec rake ";
@@ -122,28 +124,17 @@ public class RubyMotionBuilder extends Builder {
         cmds = cmds + rakeTask;
         cmds = cmds + " output=" + outputStyle;
 
-        String output = build.getProject().getWorkspace() + "/" + outputFileName;
+        String output = cmdLauncher.getProjectWorkspace() + "/" + outputFileName;
         File outputFile = new File(output);
         if (outputFile.exists()) {
             outputFile.delete();
         }
 
-        try {
-            FileOutputStream outputStream = new FileOutputStream(outputFile);
-            int r = launcher.launch(cmds, build.getEnvVars(), outputStream, build.getProject().getWorkspace()).join();
-            return r == 0;
-        } catch (IOException e) {
-            e.printStackTrace();
-            listener.getLogger().println("IOException !");
-            return false;
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-            listener.getLogger().println("InterruptedException !");
-            return false;
-        }
+        cmdLauncher.exec(cmds, outputFile);
+        return true;
     }
 
-    private boolean execiOS(AbstractBuild build, Launcher launcher, BuildListener listener) {
+    private boolean execiOS(RubyMotionCommandLauncher cmdLauncher) {
         String cmds = "rake ";
         if (getUseBundler()) {
             cmds = "bundle exec rake ";
@@ -165,8 +156,8 @@ public class RubyMotionBuilder extends Builder {
         cmds = cmds + " device_family=" + deviceFamily;
         cmds = cmds + " output=" + outputStyle;
 
-        String output = build.getProject().getWorkspace() + "/" + outputFileName;
-        String error  = build.getProject().getWorkspace() + "/.jenkins-error";
+        String output = cmdLauncher.getProjectWorkspace() + "/" + outputFileName;
+        String error  = cmdLauncher.getProjectWorkspace() + "/.jenkins-error";
         File outputFile = new File(output);
         if (outputFile.exists()) {
             outputFile.delete();
@@ -177,23 +168,8 @@ public class RubyMotionBuilder extends Builder {
         }
         cmds = cmds + " SIM_STDOUT_PATH=" + output + " SIM_STDERR_PATH=" + error;
 
-        exec(cmds, build, launcher, listener);
+        cmdLauncher.exec(cmds);
         return true;
-    }
-
-    private boolean exec(String command, AbstractBuild build, Launcher launcher, BuildListener listener) {
-        try {
-            int r = launcher.launch(command, build.getEnvVars(), listener.getLogger(), build.getProject().getWorkspace()).join();
-            return r == 0;
-        } catch (IOException e) {
-            e.printStackTrace();
-            listener.getLogger().println("IOException !");
-            return false;
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-            listener.getLogger().println("InterruptedException !");
-            return false;
-        }
     }
 
     // Overridden for better type safety.
