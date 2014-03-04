@@ -23,6 +23,7 @@ public class RubyMotionCommandLauncher {
     }
     
     public boolean exec(String command) {
+        command = "bash -c \"" + command +"\"";
         try {
             int r = launcher.launch(command, build.getEnvVars(), listener.getLogger(), build.getProject().getWorkspace()).join();
             return r == 0;
@@ -38,6 +39,7 @@ public class RubyMotionCommandLauncher {
     }
 
     public boolean exec(String command, File outputFile) {
+        command = "bash -c \"" + command +"\"";
         try {
             FileOutputStream outputStream = new FileOutputStream(outputFile);
             int r = launcher.launch(command, build.getEnvVars(), outputStream, build.getProject().getWorkspace()).join();
