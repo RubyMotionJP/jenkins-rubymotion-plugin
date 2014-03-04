@@ -8,7 +8,7 @@ RubyMotion build plugin for Jenkins
 
 Recommend that you use this with the following plugins.
 
-### TAP Plugin
+### [TAP Plugin](https://wiki.jenkins-ci.org/display/JENKINS/TAP+Plugin)
 
 This plug-in that you can see the results graphically.
 
@@ -18,9 +18,9 @@ To configure TAP plugin, you can copy and paste the file name.
 
 ![TAP configuration](https://raw.github.com/Watson1978/jenkins-rubymotion-plugin/master/screenshot/tap-configuration.png)
 
-### AnsiColor Plugin
+### [AnsiColor Plugin](https://wiki.jenkins-ci.org/display/JENKINS/AnsiColor+Plugin)
 
-This plug-in escapes ANSI sequences.
+This plug-in escapes ANSI sequences in console output.
 
 #### Before
 ![](https://raw.github.com/Watson1978/jenkins-rubymotion-plugin/master/screenshot/ansi-before.png)
