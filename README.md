@@ -2,7 +2,7 @@
 
 RubyMotion build plugin for Jenkins
 
-![ScreenShot](https://raw.github.com/Watson1978/jenkins-rubymotion-plugin/master/screenshot/rubymotion-plugin.png)
+![ScreenShot](https://raw.github.com/RubyMotionJP/jenkins-rubymotion-plugin/master/screenshot/rubymotion-plugin.png)
 
 ## Recommend
 
@@ -12,21 +12,21 @@ Recommend that you use this with the following plugins.
 
 This plug-in that you can see the results graphically.
 
-![TAP result](https://raw.github.com/Watson1978/jenkins-rubymotion-plugin/master/screenshot/tap.png)
+![TAP result](https://raw.github.com/RubyMotionJP/jenkins-rubymotion-plugin/master/screenshot/tap.png)
 
 To configure TAP plugin, you can copy and paste the file name.
 
-![TAP configuration](https://raw.github.com/Watson1978/jenkins-rubymotion-plugin/master/screenshot/tap-configuration.png)
+![TAP configuration](https://raw.github.com/RubyMotionJP/jenkins-rubymotion-plugin/master/screenshot/tap-configuration.png)
 
 ### [AnsiColor Plugin](https://wiki.jenkins-ci.org/display/JENKINS/AnsiColor+Plugin)
 
 This plug-in supports ANSI escape sequences in console output.
 
 #### Before
-![](https://raw.github.com/Watson1978/jenkins-rubymotion-plugin/master/screenshot/ansi-before.png)
+![](https://raw.github.com/RubyMotionJP/jenkins-rubymotion-plugin/master/screenshot/ansi-before.png)
 
 #### After
-![](https://raw.github.com/Watson1978/jenkins-rubymotion-plugin/master/screenshot/ansi-after.png)
+![](https://raw.github.com/RubyMotionJP/jenkins-rubymotion-plugin/master/screenshot/ansi-after.png)
 
 ## LICENSE
 
