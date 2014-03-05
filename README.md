@@ -20,7 +20,7 @@ To configure TAP plugin, you can copy and paste the file name.
 
 ### [AnsiColor Plugin](https://wiki.jenkins-ci.org/display/JENKINS/AnsiColor+Plugin)
 
-This plug-in escapes ANSI sequences in console output.
+This plug-in supports ANSI escape sequences in console output.
 
 #### Before
 ![](https://raw.github.com/Watson1978/jenkins-rubymotion-plugin/master/screenshot/ansi-before.png)
