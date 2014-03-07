@@ -51,6 +51,7 @@ public class RubyMotionCommandLauncher {
                 .cmdAsSingleString(command)
                 .envs(build.getEnvVars())
                 .stdout(outputStream)
+                .stderr(listener.getLogger())
                 .pwd(getProjectWorkspace())
                 .join();
             return r == 0;
