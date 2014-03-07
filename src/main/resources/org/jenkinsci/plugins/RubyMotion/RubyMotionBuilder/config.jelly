@@ -21,6 +21,10 @@
   </f:block>
 
   <f:block>
+    <f:checkbox title="Install CocoaPods" field="installCocoaPods" checked="${instance.installCocoaPods}" />
+  </f:block>
+
+  <f:block>
     <f:checkbox title="Need clean" field="needClean" checked="${instance.needClean}" />
   </f:block>
 

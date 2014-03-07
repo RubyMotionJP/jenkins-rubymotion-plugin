@@ -26,6 +26,7 @@ public class RubyMotionBuilder extends Builder {
     private final String outputStyle;
     private final String outputFileName;
     private final boolean useBundler;
+    private final boolean installCocoaPods;
     private final boolean needClean;
     private final String deviceFamily;
     private final String retina;
@@ -33,12 +34,15 @@ public class RubyMotionBuilder extends Builder {
 
     // Fields in config.jelly must match the parameter names in the "DataBoundConstructor"
     @DataBoundConstructor
-    public RubyMotionBuilder(String platform, String rakeTask, String outputStyle, String outputFileName, boolean useBundler, boolean needClean, String deviceFamily, String retina, String simulatorVersion) {
+    public RubyMotionBuilder(String platform, String rakeTask, String outputStyle, String outputFileName, 
+                             boolean useBundler, boolean installCocoaPods, boolean needClean,
+                             String deviceFamily, String retina, String simulatorVersion) {
         this.platform = platform;
         this.rakeTask = rakeTask;
         this.outputStyle = outputStyle;
         this.outputFileName = outputFileName;
         this.useBundler = useBundler;
+        this.installCocoaPods = installCocoaPods;
         this.needClean = needClean;
         this.deviceFamily = deviceFamily;
         this.retina = retina;
@@ -77,6 +81,10 @@ public class RubyMotionBuilder extends Builder {
         return useBundler;
     }
 
+    public boolean getInstallCocoaPods() {
+        return installCocoaPods;
+    }
+
     public boolean getNeedClean() {
         return needClean;
     }
@@ -88,6 +96,18 @@ public class RubyMotionBuilder extends Builder {
 
         if (useBundler) {
             String cmds = "bundle install";
+            result = cmdLauncher.exec(cmds);
+            if (!result) {
+                return false;
+            }
+        }
+
+        if (installCocoaPods) {
+            String cmds = "";
+            if (useBundler) {
+                cmds = "bundle exec ";
+            }
+            cmds = cmds + "rake pod:install";
             result = cmdLauncher.exec(cmds);
             if (!result) {
                 return false;
