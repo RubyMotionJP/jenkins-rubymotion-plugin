@@ -23,9 +23,14 @@ public class RubyMotionCommandLauncher {
     }
     
     public boolean exec(String command) {
-        command = "bash -c \"" + command +"\"";
+        command = "bash -c \"" + command + "\"";
         try {
-            int r = launcher.launch(command, build.getEnvVars(), listener.getLogger(), build.getProject().getWorkspace()).join();
+            int r = launcher.launch()
+                .cmdAsSingleString(command)
+                .envs(build.getEnvVars())
+                .stdout(listener.getLogger())
+                .pwd(getProjectWorkspace())
+                .join();
             return r == 0;
         } catch (IOException e) {
             e.printStackTrace();
@@ -39,10 +44,15 @@ public class RubyMotionCommandLauncher {
     }
 
     public boolean exec(String command, File outputFile) {
-        command = "bash -c \"" + command +"\"";
+        command = "bash -c \"" + command + "\"";
         try {
             FileOutputStream outputStream = new FileOutputStream(outputFile);
-            int r = launcher.launch(command, build.getEnvVars(), outputStream, build.getProject().getWorkspace()).join();
+            int r = launcher.launch()
+                .cmdAsSingleString(command)
+                .envs(build.getEnvVars())
+                .stdout(outputStream)
+                .pwd(getProjectWorkspace())
+                .join();
             return r == 0;
         } catch (IOException e) {
             e.printStackTrace();
