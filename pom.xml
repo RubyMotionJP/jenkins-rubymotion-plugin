@@ -39,9 +39,9 @@
   </developers>
 
   <scm>
-    <connection>scm:git:git://github.com/Watson1978/jenkins-rubymotion-plugin.git</connection>
-    <developerConnection>scm:git:git@github.com:Watson1978/jenkins-rubymotion-plugin.git</developerConnection>
-    <url>https://github.com/Watson1978/jenkins-rubymotion-plugin</url>
+    <connection>scm:git:git://github.com/RubyMotionJP/jenkins-rubymotion-plugin.git</connection>
+    <developerConnection>scm:git:git@github.com:RubyMotionJP/jenkins-rubymotion-plugin.git</developerConnection>
+    <url>https://github.com/RubyMotionJP/jenkins-rubymotion-plugin</url>
   </scm>
 
 </project>
