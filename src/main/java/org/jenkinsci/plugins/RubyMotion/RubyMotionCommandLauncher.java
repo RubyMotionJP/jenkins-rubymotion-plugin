@@ -65,4 +65,8 @@ public class RubyMotionCommandLauncher {
             return false;
         }
     }
+
+    public void printLog(String string) {
+        listener.getLogger().println(string);
+    }
  }
