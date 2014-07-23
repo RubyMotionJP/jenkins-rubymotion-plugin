@@ -14,8 +14,7 @@ import org.kohsuke.stapler.StaplerRequest;
 import org.kohsuke.stapler.QueryParameter;
 
 import javax.servlet.ServletException;
-import java.io.IOException;
-import java.io.File;
+import java.io.*;
 
 import org.jenkinsci.plugins.RubyMotion.RubyMotionCommandLauncher;
 
@@ -151,7 +150,7 @@ public class RubyMotionBuilder extends Builder {
         }
 
         cmdLauncher.exec(cmds, outputFile);
-        return true;
+        return checkFinishedWithoutCrash(cmdLauncher);
     }
 
     private boolean execiOS(RubyMotionCommandLauncher cmdLauncher) {
@@ -189,7 +188,27 @@ public class RubyMotionBuilder extends Builder {
         cmds = cmds + " SIM_STDOUT_PATH='" + output + "' SIM_STDERR_PATH='" + error + "'";
 
         cmdLauncher.exec(cmds);
-        return true;
+        return checkFinishedWithoutCrash(cmdLauncher);
+    }
+
+    private boolean checkFinishedWithoutCrash(RubyMotionCommandLauncher cmdLauncher) {
+        String output = cmdLauncher.getProjectWorkspace() + "/" + outputFileName;
+        String lastLine = null;
+        try {
+            BufferedReader in = new BufferedReader(new FileReader(output));
+            String line = null;
+
+            while ((line = in.readLine()) != null ) {
+                lastLine = line;
+            }
+            in.close();
+        } catch (IOException e) {
+            return false;
+        }
+        if (lastLine == null) {
+            return false;
+        }
+        return lastLine.matches("^# \\d+ tests.+");
     }
 
     // Overridden for better type safety.
