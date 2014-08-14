@@ -181,8 +181,8 @@ public class RubyMotionBuilder extends Builder {
         if (outputFile.exists()) {
             outputFile.delete();
         }
-        File errorFile = new File(output);
-        if (outputFile.exists()) {
+        File errorFile = new File(error);
+        if (errorFile.exists()) {
             errorFile.delete();
         }
         cmds = cmds + " SIM_STDOUT_PATH='" + output + "' SIM_STDERR_PATH='" + error + "'";
