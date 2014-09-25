@@ -155,7 +155,7 @@ public class RubyMotionBuilder extends Builder {
 
         cmds = cmds + rakeTask;
         if (deviceName != null && deviceName.length() > 0) {
-            cmds = cmds + " device_name=" + deviceName;
+            cmds = cmds + " device_name='" + deviceName + "'";
         }
         if (simulatorVersion != null && simulatorVersion.length() > 0) {
             cmds = cmds + " target=" + simulatorVersion;
