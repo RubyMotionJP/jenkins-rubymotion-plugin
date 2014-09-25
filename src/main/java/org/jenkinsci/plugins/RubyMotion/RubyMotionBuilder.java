@@ -27,15 +27,14 @@ public class RubyMotionBuilder extends Builder {
     private final boolean useBundler;
     private final boolean installCocoaPods;
     private final boolean needClean;
-    private final String deviceFamily;
-    private final String retina;
+    private final String deviceName;
     private final String simulatorVersion;
 
     // Fields in config.jelly must match the parameter names in the "DataBoundConstructor"
     @DataBoundConstructor
     public RubyMotionBuilder(String platform, String rakeTask, String outputStyle, String outputFileName, 
                              boolean useBundler, boolean installCocoaPods, boolean needClean,
-                             String deviceFamily, String retina, String simulatorVersion) {
+                             String deviceName, String simulatorVersion) {
         this.platform = platform;
         this.rakeTask = rakeTask;
         this.outputStyle = outputStyle;
@@ -43,8 +42,7 @@ public class RubyMotionBuilder extends Builder {
         this.useBundler = useBundler;
         this.installCocoaPods = installCocoaPods;
         this.needClean = needClean;
-        this.deviceFamily = deviceFamily;
-        this.retina = retina;
+        this.deviceName = deviceName;
         this.simulatorVersion = simulatorVersion;
     }
 
@@ -56,12 +54,8 @@ public class RubyMotionBuilder extends Builder {
         return rakeTask;
     }
 
-    public String getDeviceFamily() {
-        return deviceFamily;
-    }
-
-    public String getRetina() {
-        return retina;
+    public String getDeviceName() {
+        return deviceName;
     }
 
     public String getOutputStyle() {
@@ -160,19 +154,12 @@ public class RubyMotionBuilder extends Builder {
         }
 
         cmds = cmds + rakeTask;
-        if (simulatorVersion.length() > 0) {
+        if (deviceName != null && deviceName.length() > 0) {
+            cmds = cmds + " device_name=" + deviceName;
+        }
+        if (simulatorVersion != null && simulatorVersion.length() > 0) {
             cmds = cmds + " target=" + simulatorVersion;
         }
-
-        if (deviceFamily.equals("ipad")) {
-            cmds = cmds + " retina=" + retina;
-        }
-        else if (retina.length() > 0) {
-            if (simulatorVersion.length() > 0) {
-                cmds = cmds + " retina=" + retina;
-            }
-        }
-        cmds = cmds + " device_family=" + deviceFamily;
         cmds = cmds + " output=" + outputStyle;
 
         String output = cmdLauncher.getProjectWorkspace() + "/" + outputFileName;
@@ -252,13 +239,6 @@ public class RubyMotionBuilder extends Builder {
         public ListBoxModel doFillRakeTaskItems() {
             ListBoxModel items = new ListBoxModel();
             items.add("spec", "spec");
-            return items;
-        }
-
-        public ListBoxModel doFillDeviceFamilyItems() {
-            ListBoxModel items = new ListBoxModel();
-            items.add("iPhone", "iphone");
-            items.add("iPad",   "ipad");
             return items;
         }
 

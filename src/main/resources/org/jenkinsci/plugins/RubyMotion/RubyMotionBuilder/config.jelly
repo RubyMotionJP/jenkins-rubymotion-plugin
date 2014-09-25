@@ -29,12 +29,8 @@
   </f:block>
 
   <f:advanced title="Advanced for iOS Platform" align="left">
-    <f:entry title="Device family" field="deviceFamily">
-      <f:select />
-    </f:entry>
-
-    <f:entry title="Retina" field="retina" description="Retina need a configuration of 'Simulator version'.">
-      <f:select />
+    <f:entry title="Device name" field="deviceName" description="Specify using simulator name. When empty, use default simulator. (ex. 'iPhone 6 Plus').">
+      <f:textbox />
     </f:entry>
 
     <f:entry title="Simulator version" field="simulatorVersion" description="Specify using simulator version. When empty, use default version. (ex. '5.1').">
