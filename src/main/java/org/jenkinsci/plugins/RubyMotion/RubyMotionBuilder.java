@@ -87,6 +87,8 @@ public class RubyMotionBuilder extends Builder {
         boolean result;
         RubyMotionCommandLauncher cmdLauncher = new RubyMotionCommandLauncher(build, launcher, listener);
 
+	cmdLauncher.exec("rm -rf " + outputFileName + " .jenkins-error");
+
         if (useBundler) {
             String cmds = "bundle install";
             result = cmdLauncher.exec(cmds);
@@ -139,10 +141,6 @@ public class RubyMotionBuilder extends Builder {
 
         String output = cmdLauncher.getProjectWorkspace() + "/" + outputFileName;
         File outputFile = new File(output);
-        if (outputFile.exists()) {
-            outputFile.delete();
-        }
-
         cmdLauncher.exec(cmds, outputFile);
         return checkFinishedWithoutCrash(cmdLauncher);
     }
@@ -164,14 +162,6 @@ public class RubyMotionBuilder extends Builder {
 
         String output = cmdLauncher.getProjectWorkspace() + "/" + outputFileName;
         String error  = cmdLauncher.getProjectWorkspace() + "/.jenkins-error";
-        File outputFile = new File(output);
-        if (outputFile.exists()) {
-            outputFile.delete();
-        }
-        File errorFile = new File(error);
-        if (errorFile.exists()) {
-            errorFile.delete();
-        }
         cmds = cmds + " SIM_STDOUT_PATH='" + output + "' SIM_STDERR_PATH='" + error + "'";
 
         cmdLauncher.exec(cmds);
