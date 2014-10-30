@@ -142,7 +142,8 @@ public class RubyMotionBuilder extends Builder {
         String output = cmdLauncher.getProjectWorkspace() + "/" + outputFileName;
         File outputFile = new File(output);
         cmdLauncher.exec(cmds, outputFile);
-        return checkFinishedWithoutCrash(cmdLauncher);
+        //return checkFinishedWithoutCrash(cmdLauncher);
+	return true;
     }
 
     private boolean execiOS(RubyMotionCommandLauncher cmdLauncher) {
@@ -165,7 +166,8 @@ public class RubyMotionBuilder extends Builder {
         cmds = cmds + " SIM_STDOUT_PATH='" + output + "' SIM_STDERR_PATH='" + error + "'";
 
         cmdLauncher.exec(cmds);
-        return checkFinishedWithoutCrash(cmdLauncher);
+        //return checkFinishedWithoutCrash(cmdLauncher);
+	return true;
     }
 
     private boolean checkFinishedWithoutCrash(RubyMotionCommandLauncher cmdLauncher) {
