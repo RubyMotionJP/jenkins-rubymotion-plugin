@@ -1,6 +1,7 @@
 package org.jenkinsci.plugins.RubyMotion;
 import hudson.Launcher;
 import hudson.Extension;
+import hudson.FilePath;
 import hudson.util.FormValidation;
 import hudson.model.AbstractBuild;
 import hudson.model.BuildListener;
@@ -142,8 +143,7 @@ public class RubyMotionBuilder extends Builder {
         String output = cmdLauncher.getProjectWorkspace() + "/" + outputFileName;
         File outputFile = new File(output);
         cmdLauncher.exec(cmds, outputFile);
-        //return checkFinishedWithoutCrash(cmdLauncher);
-	return true;
+        return checkFinishedWithoutCrash(cmdLauncher);
     }
 
     private boolean execiOS(RubyMotionCommandLauncher cmdLauncher) {
@@ -166,21 +166,18 @@ public class RubyMotionBuilder extends Builder {
         cmds = cmds + " SIM_STDOUT_PATH='" + output + "' SIM_STDERR_PATH='" + error + "'";
 
         cmdLauncher.exec(cmds);
-        //return checkFinishedWithoutCrash(cmdLauncher);
-	return true;
+        return checkFinishedWithoutCrash(cmdLauncher);
     }
 
     private boolean checkFinishedWithoutCrash(RubyMotionCommandLauncher cmdLauncher) {
-        String output = cmdLauncher.getProjectWorkspace() + "/" + outputFileName;
         String lastLine = null;
         try {
-            BufferedReader in = new BufferedReader(new FileReader(output));
-            String line = null;
-
-            while ((line = in.readLine()) != null ) {
-                lastLine = line;
+            FilePath fp = cmdLauncher.build.getWorkspace().child(outputFileName);
+            String output = fp.readToString().trim();
+            int index = output.lastIndexOf("\n");
+            if (index != -1 && index != output.length()) {
+                lastLine = output.substring(index + 1);
             }
-            in.close();
         } catch (IOException e) {
             return false;
         }

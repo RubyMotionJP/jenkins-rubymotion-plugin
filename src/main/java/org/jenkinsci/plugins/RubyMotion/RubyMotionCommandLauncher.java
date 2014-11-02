@@ -8,9 +8,9 @@ import java.io.File;
 import java.io.FileOutputStream;
 
 public class RubyMotionCommandLauncher {
-    private final AbstractBuild build;
-    private final Launcher launcher;
-    private final BuildListener listener;
+    final AbstractBuild build;
+    final Launcher launcher;
+    final BuildListener listener;
 
     public RubyMotionCommandLauncher(AbstractBuild build, Launcher launcher, BuildListener listener) {
         this.build = build;
