@@ -21,7 +21,7 @@ public class RubyMotionCommandLauncher {
     public String getProjectWorkspace() {
         return build.getProject().getWorkspace().toString();
     }
-    
+
     public boolean exec(String command) {
         command = "bash -c \"" + command + "\"";
         try {

@@ -33,7 +33,7 @@ public class RubyMotionBuilder extends Builder {
 
     // Fields in config.jelly must match the parameter names in the "DataBoundConstructor"
     @DataBoundConstructor
-    public RubyMotionBuilder(String platform, String rakeTask, String outputStyle, String outputFileName, 
+    public RubyMotionBuilder(String platform, String rakeTask, String outputStyle, String outputFileName,
                              boolean useBundler, boolean installCocoaPods, boolean needClean,
                              String deviceName, String simulatorVersion) {
         this.platform = platform;
@@ -208,7 +208,7 @@ public class RubyMotionBuilder extends Builder {
     public static final class DescriptorImpl extends BuildStepDescriptor<Builder> {
 
         /**
-         * In order to load the persisted global configuration, you have to 
+         * In order to load the persisted global configuration, you have to
          * call load() in the constructor.
          */
         public DescriptorImpl() {
@@ -216,7 +216,7 @@ public class RubyMotionBuilder extends Builder {
         }
 
         public boolean isApplicable(Class<? extends AbstractProject> aClass) {
-            // Indicates that this builder can be used with all kinds of project types 
+            // Indicates that this builder can be used with all kinds of project types
             return true;
         }
 
@@ -261,4 +261,3 @@ public class RubyMotionBuilder extends Builder {
         }
     }
 }
-
