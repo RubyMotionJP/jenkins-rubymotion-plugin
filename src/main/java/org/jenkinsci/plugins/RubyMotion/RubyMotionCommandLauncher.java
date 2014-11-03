@@ -5,7 +5,7 @@ import hudson.model.BuildListener;
 
 import java.io.IOException;
 import java.io.File;
-import java.io.FileOutputStream;
+import java.io.OutputStream;
 
 public class RubyMotionCommandLauncher {
     final AbstractBuild build;
@@ -43,10 +43,9 @@ public class RubyMotionCommandLauncher {
         }
     }
 
-    public boolean exec(String command, File outputFile) {
+    public boolean exec(String command, OutputStream outputStream) {
         command = "bash -c \"" + command + "\"";
         try {
-            FileOutputStream outputStream = new FileOutputStream(outputFile);
             int r = launcher.launch()
                 .cmdAsSingleString(command)
                 .envs(build.getEnvVars())

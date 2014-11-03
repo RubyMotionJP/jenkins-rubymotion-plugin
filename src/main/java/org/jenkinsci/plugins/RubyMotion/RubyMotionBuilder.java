@@ -140,9 +140,18 @@ public class RubyMotionBuilder extends Builder {
         cmds = cmds + rakeTask;
         cmds = cmds + " output=" + outputStyle;
 
-        String output = cmdLauncher.getProjectWorkspace() + "/" + outputFileName;
-        File outputFile = new File(output);
-        cmdLauncher.exec(cmds, outputFile);
+        OutputStream outputStream;
+        try {
+            FilePath fp = cmdLauncher.build.getWorkspace().child(outputFileName);
+            outputStream = fp.write();
+        }
+        catch (IOException e) {
+            return false;
+        }
+        catch (InterruptedException e) {
+            return false;
+        }
+        cmdLauncher.exec(cmds, outputStream);
         return checkFinishedWithoutCrash(cmdLauncher);
     }
 
