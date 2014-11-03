@@ -142,7 +142,7 @@ public class RubyMotionBuilder extends Builder {
 
         OutputStream outputStream;
         try {
-            FilePath fp = cmdLauncher.build.getWorkspace().child(outputFileName);
+            FilePath fp = cmdLauncher.getWorkspaceFilePath(outputFileName);
             outputStream = fp.write();
         }
         catch (IOException e) {
@@ -181,7 +181,7 @@ public class RubyMotionBuilder extends Builder {
     private boolean checkFinishedWithoutCrash(RubyMotionCommandLauncher cmdLauncher) {
         String lastLine = null;
         try {
-            FilePath fp = cmdLauncher.build.getWorkspace().child(outputFileName);
+            FilePath fp = cmdLauncher.getWorkspaceFilePath(outputFileName);
             String output = fp.readToString().trim();
             int index = output.lastIndexOf("\n");
             if (index != -1 && index != output.length()) {

@@ -1,5 +1,6 @@
 package org.jenkinsci.plugins.RubyMotion;
 import hudson.Launcher;
+import hudson.FilePath;
 import hudson.model.AbstractBuild;
 import hudson.model.BuildListener;
 
@@ -8,9 +9,9 @@ import java.io.File;
 import java.io.OutputStream;
 
 public class RubyMotionCommandLauncher {
-    final AbstractBuild build;
-    final Launcher launcher;
-    final BuildListener listener;
+    private final AbstractBuild build;
+    private final Launcher launcher;
+    private final BuildListener listener;
 
     public RubyMotionCommandLauncher(AbstractBuild build, Launcher launcher, BuildListener listener) {
         this.build = build;
@@ -20,6 +21,10 @@ public class RubyMotionCommandLauncher {
 
     public String getProjectWorkspace() {
         return build.getProject().getWorkspace().toString();
+    }
+
+    public FilePath getWorkspaceFilePath(String fileName) {
+        return build.getWorkspace().child(fileName);
     }
 
     public boolean exec(String command) {
