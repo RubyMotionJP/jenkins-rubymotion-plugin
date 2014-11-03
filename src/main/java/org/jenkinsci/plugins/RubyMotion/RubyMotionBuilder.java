@@ -88,7 +88,7 @@ public class RubyMotionBuilder extends Builder {
         boolean result;
         RubyMotionCommandLauncher cmdLauncher = new RubyMotionCommandLauncher(build, launcher, listener);
 
-	cmdLauncher.exec("rm -rf " + outputFileName + " .jenkins-error");
+        cmdLauncher.exec("rm -rf " + outputFileName + " .jenkins-error");
 
         if (useBundler) {
             String cmds = "bundle install";
@@ -187,7 +187,8 @@ public class RubyMotionBuilder extends Builder {
             if (index != -1 && index != output.length()) {
                 lastLine = output.substring(index + 1);
             }
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             return false;
         }
         if (lastLine == null) {

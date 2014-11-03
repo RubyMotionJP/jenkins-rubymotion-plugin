@@ -37,11 +37,13 @@ public class RubyMotionCommandLauncher {
                 .pwd(getProjectWorkspace())
                 .join();
             return r == 0;
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             e.printStackTrace();
             listener.getLogger().println("IOException !");
             return false;
-        } catch (InterruptedException e) {
+        }
+        catch (InterruptedException e) {
             e.printStackTrace();
             listener.getLogger().println("InterruptedException !");
             return false;
@@ -59,11 +61,13 @@ public class RubyMotionCommandLauncher {
                 .pwd(getProjectWorkspace())
                 .join();
             return r == 0;
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             e.printStackTrace();
             listener.getLogger().println("IOException !");
             return false;
-        } catch (InterruptedException e) {
+        }
+        catch (InterruptedException e) {
             e.printStackTrace();
             listener.getLogger().println("InterruptedException !");
             return false;
