@@ -241,15 +241,6 @@ public class RubyMotionBuilder extends Builder {
             return items;
         }
 
-        public ListBoxModel doFillRetinaItems() {
-            ListBoxModel items = new ListBoxModel();
-            items.add("off",           "false");
-            items.add("on",            "true");
-            items.add("on (3.5-inch)", "3.5");
-            items.add("on (4-inch)",   "4");
-            return items;
-        }
-
         public ListBoxModel doFillOutputStyleItems() {
             ListBoxModel items = new ListBoxModel();
             items.add("tap", "tap");
