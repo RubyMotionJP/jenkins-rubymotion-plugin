@@ -173,7 +173,6 @@ public class RubyMotionBuilder extends Builder {
         String output = cmdLauncher.getProjectWorkspace() + "/" + outputFileName;
         String error  = cmdLauncher.getProjectWorkspace() + "/.jenkins-error";
         cmds = cmds + " SIM_STDOUT_PATH='" + output + "' SIM_STDERR_PATH='" + error + "'";
-        cmds = cmds + " clean=true";
 
         cmdLauncher.exec(cmds);
         return checkFinishedWithoutCrash(cmdLauncher);
