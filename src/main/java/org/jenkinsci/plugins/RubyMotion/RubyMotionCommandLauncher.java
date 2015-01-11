@@ -32,7 +32,7 @@ public class RubyMotionCommandLauncher {
         try {
             int r = launcher.launch()
                 .cmdAsSingleString(command)
-                .envs(build.getEnvVars())
+                .envs(build.getEnvironment(listener))
                 .stdout(listener.getLogger())
                 .pwd(getProjectWorkspace())
                 .join();
@@ -55,7 +55,7 @@ public class RubyMotionCommandLauncher {
         try {
             int r = launcher.launch()
                 .cmdAsSingleString(command)
-                .envs(build.getEnvVars())
+                .envs(build.getEnvironment(listener))
                 .stdout(outputStream)
                 .stderr(listener.getLogger())
                 .pwd(getProjectWorkspace())
