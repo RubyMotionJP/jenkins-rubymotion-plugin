@@ -122,7 +122,7 @@ public class RubyMotionBuilder extends Builder {
             }
         }
 
-        if (platform.equals("ios")) {
+        if (platform.equals("ios") || platform.equals("tvos")) {
             return execiOS(cmdLauncher);
         }
         else if (platform.equals("osx")) {
@@ -231,6 +231,7 @@ public class RubyMotionBuilder extends Builder {
         public ListBoxModel doFillPlatformItems() {
             ListBoxModel items = new ListBoxModel();
             items.add("iOS Platform",  "ios");
+            items.add("tvOS Platform", "tvos");
             items.add("OS X Platform", "osx");
             return items;
         }
