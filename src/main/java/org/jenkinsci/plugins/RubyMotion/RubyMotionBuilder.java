@@ -100,24 +100,24 @@ public class RubyMotionBuilder extends Builder {
             }
         }
 
-        if (installCocoaPods) {
+        if (needClean) {
             String cmds = "";
             if (useBundler) {
                 cmds = "bundle exec ";
             }
-            cmds = cmds + "rake pod:install";
+            cmds = cmds + "rake clean:all";
             result = cmdLauncher.exec(cmds);
             if (!result) {
                 return false;
             }
         }
 
-        if (needClean) {
+        if (installCocoaPods) {
             String cmds = "";
             if (useBundler) {
                 cmds = "bundle exec ";
             }
-            cmds = cmds + "rake clean";
+            cmds = cmds + "rake pod:install";
             result = cmdLauncher.exec(cmds);
             if (!result) {
                 return false;
