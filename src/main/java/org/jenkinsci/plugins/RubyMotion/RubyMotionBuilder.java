@@ -131,12 +131,15 @@ public class RubyMotionBuilder extends Builder {
         }
 
         if (platform.equals("ios") || platform.equals("tvos")) {
-            return execiOS(cmdLauncher);
+            result = execiOS(cmdLauncher);
         }
         else if (platform.equals("osx")) {
-            return execOSX(cmdLauncher);
+            result = execOSX(cmdLauncher);
         }
-        return false;
+        if (outputResult) {
+            printResult(cmdLauncher);
+        }
+        return result;
     }
 
     private boolean execOSX(RubyMotionCommandLauncher cmdLauncher) {
@@ -160,9 +163,6 @@ public class RubyMotionBuilder extends Builder {
             return false;
         }
         cmdLauncher.exec(cmds, outputStream);
-        if (outputResult) {
-            printResult(cmdLauncher);
-        }
         return checkFinishedWithoutCrash(cmdLauncher);
     }
 
@@ -186,9 +186,6 @@ public class RubyMotionBuilder extends Builder {
         cmds = cmds + " SIM_STDOUT_PATH='" + output + "' SIM_STDERR_PATH='" + error + "'";
 
         cmdLauncher.exec(cmds);
-        if (outputResult) {
-            printResult(cmdLauncher);
-        }
         return checkFinishedWithoutCrash(cmdLauncher);
     }
 
