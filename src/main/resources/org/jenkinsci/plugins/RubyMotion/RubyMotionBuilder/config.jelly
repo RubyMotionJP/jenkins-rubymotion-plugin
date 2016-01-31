@@ -28,6 +28,10 @@
     <f:checkbox title="Need clean" field="needClean" checked="${instance.needClean}" />
   </f:block>
 
+  <f:block>
+    <f:checkbox title="Output Result to console" field="outputResult" default="true" checked="${instance.outputResult}" />
+  </f:block>
+
   <f:advanced title="Advanced for iOS Platform" align="left">
     <f:entry title="Device name" field="deviceName" description="Specify using simulator name. When empty, use default simulator. (ex. 'iPhone 6 Plus').">
       <f:textbox />

@@ -28,6 +28,7 @@ public class RubyMotionBuilder extends Builder {
     private final boolean useBundler;
     private final boolean installCocoaPods;
     private final boolean needClean;
+    private final boolean outputResult;
     private final String deviceName;
     private final String simulatorVersion;
 
@@ -36,7 +37,7 @@ public class RubyMotionBuilder extends Builder {
     // Fields in config.jelly must match the parameter names in the "DataBoundConstructor"
     @DataBoundConstructor
     public RubyMotionBuilder(String platform, String rakeTask, String outputStyle, String outputFileName,
-                             boolean useBundler, boolean installCocoaPods, boolean needClean,
+                             boolean useBundler, boolean installCocoaPods, boolean needClean, boolean outputResult,
                              String deviceName, String simulatorVersion) {
         this.platform = platform;
         this.rakeTask = rakeTask;
@@ -45,6 +46,7 @@ public class RubyMotionBuilder extends Builder {
         this.useBundler = useBundler;
         this.installCocoaPods = installCocoaPods;
         this.needClean = needClean;
+        this.outputResult = outputResult;
         this.deviceName = deviceName;
         this.simulatorVersion = simulatorVersion;
     }
@@ -83,6 +85,10 @@ public class RubyMotionBuilder extends Builder {
 
     public boolean getNeedClean() {
         return needClean;
+    }
+
+    public boolean getOutputResult() {
+        return outputResult;
     }
 
     @Override
@@ -154,7 +160,9 @@ public class RubyMotionBuilder extends Builder {
             return false;
         }
         cmdLauncher.exec(cmds, outputStream);
-        printResult(cmdLauncher);
+        if (outputResult) {
+            printResult(cmdLauncher);
+        }
         return checkFinishedWithoutCrash(cmdLauncher);
     }
 
@@ -178,7 +186,9 @@ public class RubyMotionBuilder extends Builder {
         cmds = cmds + " SIM_STDOUT_PATH='" + output + "' SIM_STDERR_PATH='" + error + "'";
 
         cmdLauncher.exec(cmds);
-        printResult(cmdLauncher);
+        if (outputResult) {
+            printResult(cmdLauncher);
+        }
         return checkFinishedWithoutCrash(cmdLauncher);
     }
 
