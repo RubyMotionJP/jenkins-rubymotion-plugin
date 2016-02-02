@@ -20,7 +20,7 @@ public class RubyMotionCommandLauncher {
     }
 
     public String getProjectWorkspace() {
-        return build.getProject().getWorkspace().toString();
+        return build.getWorkspace().toString();
     }
 
     public FilePath getWorkspaceFilePath(String fileName) {
