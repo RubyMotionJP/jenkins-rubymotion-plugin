@@ -24,7 +24,7 @@ public class RubyMotionCommandLauncher {
     }
 
     public FilePath getWorkspaceFilePath(String fileName) {
-        return build.getWorkspace().child(fileName);
+        return new FilePath(build.getWorkspace(), fileName);
     }
 
     public boolean exec(String command) {
