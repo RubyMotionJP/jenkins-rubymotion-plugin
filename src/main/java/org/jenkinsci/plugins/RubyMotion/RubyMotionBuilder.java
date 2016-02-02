@@ -130,6 +130,7 @@ public class RubyMotionBuilder extends Builder {
             }
         }
 
+        result = false;
         if (platform.equals("ios") || platform.equals("tvos")) {
             result = execiOS(cmdLauncher);
         }
