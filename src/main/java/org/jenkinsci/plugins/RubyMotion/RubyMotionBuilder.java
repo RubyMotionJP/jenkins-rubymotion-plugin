@@ -5,6 +5,7 @@ import hudson.FilePath;
 import hudson.util.FormValidation;
 import hudson.model.AbstractBuild;
 import hudson.model.BuildListener;
+import hudson.model.Result;
 import hudson.model.AbstractProject;
 import hudson.tasks.Builder;
 import hudson.tasks.BuildStepDescriptor;
@@ -130,17 +131,28 @@ public class RubyMotionBuilder extends Builder {
             }
         }
 
-        result = false;
+        boolean success = false;
         if (platform.equals("ios") || platform.equals("tvos")) {
-            result = execiOS(cmdLauncher);
+            success = execiOS(cmdLauncher);
         }
         else if (platform.equals("osx")) {
-            result = execOSX(cmdLauncher);
+            success = execOSX(cmdLauncher);
         }
+
+        boolean noCrashed = checkFinishedWithoutCrash(cmdLauncher);
+        if (success == false) {
+            if (noCrashed) {
+                build.setResult(Result.UNSTABLE);
+            }
+            else {
+                build.setResult(Result.FAILURE);
+            }
+        }
+
         if (outputResult) {
             printResult(cmdLauncher);
         }
-        return result;
+        return true;
     }
 
     private boolean execOSX(RubyMotionCommandLauncher cmdLauncher) {
@@ -163,8 +175,7 @@ public class RubyMotionBuilder extends Builder {
         catch (InterruptedException e) {
             return false;
         }
-        cmdLauncher.exec(cmds, outputStream);
-        return checkFinishedWithoutCrash(cmdLauncher);
+        return cmdLauncher.exec(cmds, outputStream);
     }
 
     private boolean execiOS(RubyMotionCommandLauncher cmdLauncher) {
@@ -186,8 +197,7 @@ public class RubyMotionBuilder extends Builder {
         String error  = cmdLauncher.getProjectWorkspace() + "/.jenkins-error";
         cmds = cmds + " SIM_STDOUT_PATH='" + output + "' SIM_STDERR_PATH='" + error + "'";
 
-        cmdLauncher.exec(cmds);
-        return checkFinishedWithoutCrash(cmdLauncher);
+        return cmdLauncher.exec(cmds);
     }
 
     private void readResult(RubyMotionCommandLauncher cmdLauncher) {
