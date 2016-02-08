@@ -74,6 +74,18 @@ public class RubyMotionCommandLauncher {
         }
     }
 
+    public void removeFile(String file) {
+        FilePath fp;
+        fp = getWorkspaceFilePath(file);
+        try {
+            if (fp.exists()) {
+                fp.delete();
+            }
+        } 
+        catch (Exception e) {
+        }
+    }
+
     public void printLog(String string) {
         listener.getLogger().println(string);
     }

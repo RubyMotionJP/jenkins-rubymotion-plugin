@@ -97,7 +97,8 @@ public class RubyMotionBuilder extends Builder {
         boolean result;
         RubyMotionCommandLauncher cmdLauncher = new RubyMotionCommandLauncher(build, launcher, listener);
 
-        cmdLauncher.exec("rm -rf " + outputFileName + " .jenkins-error");
+        cmdLauncher.removeFile(outputFileName);
+        cmdLauncher.removeFile(".jenkins-error");
 
         if (useBundler) {
             String cmds = "bundle install";
