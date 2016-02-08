@@ -8,7 +8,7 @@
 
   <groupId>org.jenkins-ci.ruby-plugins</groupId>
   <artifactId>rubymotion</artifactId>
-  <version>1.14-SNAPSHOT</version>
+  <version>1.14</version>
   <name>Jenkins RubyMotion Plugin</name>
   <description>This plugin integrates RubyMotion with Jenkins.</description>
   <packaging>hpi</packaging>
@@ -42,7 +42,7 @@
     <connection>scm:git:git://github.com/RubyMotionJP/jenkins-rubymotion-plugin.git</connection>
     <developerConnection>scm:git:git@github.com:RubyMotionJP/jenkins-rubymotion-plugin.git</developerConnection>
     <url>https://github.com/RubyMotionJP/jenkins-rubymotion-plugin</url>
-    <tag>HEAD</tag>
+    <tag>rubymotion-1.14</tag>
   </scm>
 
 </project>
