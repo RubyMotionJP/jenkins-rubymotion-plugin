@@ -24,6 +24,9 @@ public class RubyMotionCommandLauncher {
     }
 
     public FilePath getWorkspaceFilePath(String fileName) {
+        if (build.getWorkspace().isRemote()) {
+            return new FilePath(build.getWorkspace().getChannel(), fileName);
+        }
         return new FilePath(build.getWorkspace(), fileName);
     }
 
