@@ -170,10 +170,7 @@ public class RubyMotionBuilder extends Builder {
             FilePath fp = cmdLauncher.getWorkspaceFilePath(outputFileName);
             outputStream = fp.write();
         }
-        catch (IOException e) {
-            return false;
-        }
-        catch (InterruptedException e) {
+        catch (Exception e) {
             return false;
         }
         return cmdLauncher.exec(cmds, outputStream);
@@ -210,7 +207,7 @@ public class RubyMotionBuilder extends Builder {
             FilePath fp = cmdLauncher.getWorkspaceFilePath(outputFileName);
             resultString = fp.readToString().trim();
         }
-        catch (IOException e) {
+        catch (Exception e) {
         }
     }
 

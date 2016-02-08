@@ -38,14 +38,9 @@ public class RubyMotionCommandLauncher {
                 .join();
             return r == 0;
         }
-        catch (IOException e) {
+        catch (Exception e) {
             e.printStackTrace();
-            listener.getLogger().println("IOException !");
-            return false;
-        }
-        catch (InterruptedException e) {
-            e.printStackTrace();
-            listener.getLogger().println("InterruptedException !");
+            listener.getLogger().println("Exception !");
             return false;
         }
     }
@@ -62,14 +57,9 @@ public class RubyMotionCommandLauncher {
                 .join();
             return r == 0;
         }
-        catch (IOException e) {
+        catch (Exception e) {
             e.printStackTrace();
-            listener.getLogger().println("IOException !");
-            return false;
-        }
-        catch (InterruptedException e) {
-            e.printStackTrace();
-            listener.getLogger().println("InterruptedException !");
+            listener.getLogger().println("Exception !");
             return false;
         }
     }
