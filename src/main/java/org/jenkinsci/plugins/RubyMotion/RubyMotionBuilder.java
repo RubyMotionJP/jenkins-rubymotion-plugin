@@ -138,6 +138,10 @@ public class RubyMotionBuilder extends Builder {
             success = execOSX(cmdLauncher);
         }
 
+        if (outputResult) {
+            printResult(cmdLauncher);
+        }
+
         boolean noCrashed = checkFinishedWithoutCrash(cmdLauncher);
         if (success == false) {
             if (noCrashed) {
@@ -147,10 +151,6 @@ public class RubyMotionBuilder extends Builder {
                 build.setResult(Result.FAILURE);
                 printError(cmdLauncher);
             }
-        }
-
-        if (outputResult) {
-            printResult(cmdLauncher);
         }
         return true;
     }
