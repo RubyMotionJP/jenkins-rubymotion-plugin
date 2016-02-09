@@ -20,12 +20,12 @@ public class RubyMotionCommandLauncher {
     }
 
     public String getProjectWorkspace() {
-        return build.getWorkspace().toString();
+        return build.getWorkspace().getRemote();
     }
 
     public FilePath getWorkspaceFilePath(String fileName) {
         if (build.getWorkspace().isRemote()) {
-            return new FilePath(build.getWorkspace().getChannel(), fileName);
+            return new FilePath(build.getWorkspace().getChannel(), build.getWorkspace().getRemote() + "/" + fileName);
         }
         return new FilePath(build.getWorkspace(), fileName);
     }
