@@ -33,6 +33,8 @@ public class RubyMotionBuilder extends Builder {
     private final String deviceName;
     private final String simulatorVersion;
 
+    RubyMotionCommandLauncher cmdLauncher = null;
+
     // Fields in config.jelly must match the parameter names in the "DataBoundConstructor"
     @DataBoundConstructor
     public RubyMotionBuilder(String platform, String rakeTask, String outputStyle, String outputFileName,
@@ -93,7 +95,7 @@ public class RubyMotionBuilder extends Builder {
     @Override
     public boolean perform(AbstractBuild build, Launcher launcher, BuildListener listener) {
         boolean result;
-        RubyMotionCommandLauncher cmdLauncher = new RubyMotionCommandLauncher(build, launcher, listener);
+        cmdLauncher = new RubyMotionCommandLauncher(build, launcher, listener);
 
         cmdLauncher.removeFile(outputFileName);
         cmdLauncher.removeFile(".jenkins-error");
@@ -132,30 +134,30 @@ public class RubyMotionBuilder extends Builder {
 
         boolean success = false;
         if (platform.equals("ios") || platform.equals("tvos")) {
-            success = execiOS(cmdLauncher);
+            success = execiOS();
         }
         else if (platform.equals("osx")) {
-            success = execOSX(cmdLauncher);
+            success = execOSX();
         }
 
         if (outputResult) {
-            printResult(cmdLauncher);
+            printResult();
         }
 
-        boolean noCrashed = checkFinishedWithoutCrash(cmdLauncher);
+        boolean noCrashed = checkFinishedWithoutCrash();
         if (success == false) {
             if (noCrashed) {
                 build.setResult(Result.UNSTABLE);
             }
             else {
                 build.setResult(Result.FAILURE);
-                printError(cmdLauncher);
+                printError();
             }
         }
         return true;
     }
 
-    private boolean execOSX(RubyMotionCommandLauncher cmdLauncher) {
+    private boolean execOSX() {
         String cmds = "rake ";
         if (getUseBundler()) {
             cmds = "bundle exec rake ";
@@ -175,7 +177,7 @@ public class RubyMotionBuilder extends Builder {
         return cmdLauncher.exec(cmds, outputStream);
     }
 
-    private boolean execiOS(RubyMotionCommandLauncher cmdLauncher) {
+    private boolean execiOS() {
         String cmds = "rake ";
         if (getUseBundler()) {
             cmds = "bundle exec rake ";
@@ -197,7 +199,7 @@ public class RubyMotionBuilder extends Builder {
         return cmdLauncher.exec(cmds);
     }
 
-    private String readResult(RubyMotionCommandLauncher cmdLauncher, String path) {
+    private String readResult(String path) {
         String result = null;
         try {
             FilePath fp = cmdLauncher.getWorkspaceFilePath(path);
@@ -211,24 +213,24 @@ public class RubyMotionBuilder extends Builder {
         }
     }
 
-    private void printResult(RubyMotionCommandLauncher cmdLauncher) {
-        String result = readResult(cmdLauncher, outputFileName);
+    private void printResult() {
+        String result = readResult(outputFileName);
         if (result == null) {
             return;
         }
         cmdLauncher.printLog(result + "\n");
     }
 
-    private void printError(RubyMotionCommandLauncher cmdLauncher) {
-        String error = readResult(cmdLauncher, ".jenkins-error");
+    private void printError() {
+        String error = readResult(".jenkins-error");
         if (error == null) {
             return;
         }
         cmdLauncher.printLog(error + "\n");
     }
 
-    private boolean checkFinishedWithoutCrash(RubyMotionCommandLauncher cmdLauncher) {
-        String result = readResult(cmdLauncher, outputFileName);
+    private boolean checkFinishedWithoutCrash() {
+        String result = readResult(outputFileName);
         if (result == null) {
             return false;
         }
