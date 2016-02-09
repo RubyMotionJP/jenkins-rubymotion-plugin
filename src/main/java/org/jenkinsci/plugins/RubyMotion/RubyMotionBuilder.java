@@ -33,8 +33,6 @@ public class RubyMotionBuilder extends Builder {
     private final String deviceName;
     private final String simulatorVersion;
 
-    private String resultString = null;
-
     // Fields in config.jelly must match the parameter names in the "DataBoundConstructor"
     @DataBoundConstructor
     public RubyMotionBuilder(String platform, String rakeTask, String outputStyle, String outputFileName,
@@ -198,37 +196,38 @@ public class RubyMotionBuilder extends Builder {
         return cmdLauncher.exec(cmds);
     }
 
-    private void readResult(RubyMotionCommandLauncher cmdLauncher) {
-        if (resultString != null) {
-            return;
-        }
-
+    private String readResult(RubyMotionCommandLauncher cmdLauncher) {
+        String result = null;
         try {
             FilePath fp = cmdLauncher.getWorkspaceFilePath(outputFileName);
-            resultString = fp.readToString().trim();
-        }
+            if (fp.exists()) {
+                result = fp.readToString().trim();
+            }
+            return result;
+    }
         catch (Exception e) {
+            return result;
         }
     }
 
     private void printResult(RubyMotionCommandLauncher cmdLauncher) {
-        readResult(cmdLauncher);
-        if (resultString == null) {
+        String result = readResult(cmdLauncher);
+        if (result == null) {
             return;
         }
-        cmdLauncher.printLog(resultString + "\n");
+        cmdLauncher.printLog(result + "\n");
     }
 
     private boolean checkFinishedWithoutCrash(RubyMotionCommandLauncher cmdLauncher) {
-        readResult(cmdLauncher);
-        if (resultString == null) {
+        String result = readResult(cmdLauncher);
+        if (result == null) {
             return false;
         }
 
         String lastLine = null;
-        int index = resultString.lastIndexOf("\n");
-        if (index != -1 && index != resultString.length()) {
-            lastLine = resultString.substring(index + 1);
+        int index = result.lastIndexOf("\n");
+        if (index != -1 && index != result.length()) {
+            lastLine = result.substring(index + 1);
         }
         if (lastLine == null) {
             return false;
