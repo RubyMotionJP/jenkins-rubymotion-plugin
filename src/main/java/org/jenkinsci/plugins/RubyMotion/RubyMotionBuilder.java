@@ -145,6 +145,7 @@ public class RubyMotionBuilder extends Builder {
             }
             else {
                 build.setResult(Result.FAILURE);
+                printError(cmdLauncher);
             }
         }
 
@@ -196,10 +197,10 @@ public class RubyMotionBuilder extends Builder {
         return cmdLauncher.exec(cmds);
     }
 
-    private String readResult(RubyMotionCommandLauncher cmdLauncher) {
+    private String readResult(RubyMotionCommandLauncher cmdLauncher, String path) {
         String result = null;
         try {
-            FilePath fp = cmdLauncher.getWorkspaceFilePath(outputFileName);
+            FilePath fp = cmdLauncher.getWorkspaceFilePath(path);
             if (fp.exists()) {
                 result = fp.readToString().trim();
             }
@@ -211,15 +212,23 @@ public class RubyMotionBuilder extends Builder {
     }
 
     private void printResult(RubyMotionCommandLauncher cmdLauncher) {
-        String result = readResult(cmdLauncher);
+        String result = readResult(cmdLauncher, outputFileName);
         if (result == null) {
             return;
         }
         cmdLauncher.printLog(result + "\n");
     }
 
+    private void printError(RubyMotionCommandLauncher cmdLauncher) {
+        String error = readResult(cmdLauncher, ".jenkins-error");
+        if (error == null) {
+            return;
+        }
+        cmdLauncher.printLog(error + "\n");
+    }
+
     private boolean checkFinishedWithoutCrash(RubyMotionCommandLauncher cmdLauncher) {
-        String result = readResult(cmdLauncher);
+        String result = readResult(cmdLauncher, outputFileName);
         if (result == null) {
             return false;
         }
