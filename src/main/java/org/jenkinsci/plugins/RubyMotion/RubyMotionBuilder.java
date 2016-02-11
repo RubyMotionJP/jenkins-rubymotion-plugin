@@ -33,7 +33,7 @@ public class RubyMotionBuilder extends Builder {
     private final String deviceName;
     private final String simulatorVersion;
 
-    RubyMotionCommandLauncher cmdLauncher = null;
+    private transient RubyMotionCommandLauncher cmdLauncher = null;
 
     // Fields in config.jelly must match the parameter names in the "DataBoundConstructor"
     @DataBoundConstructor
