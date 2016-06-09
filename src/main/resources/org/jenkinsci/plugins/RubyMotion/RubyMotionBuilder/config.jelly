@@ -42,4 +42,10 @@
     </f:entry>
   </f:advanced>
 
+  <f:advanced title="Advanced" align="left">
+    <f:entry title="Environment Variable" field="envVars" description="Specify Environment Variable for your project with space delimited (ex. 'FOO=12 BAR=34').">
+      <f:textbox />
+    </f:entry>
+  </f:advanced>
+
 </j:jelly>

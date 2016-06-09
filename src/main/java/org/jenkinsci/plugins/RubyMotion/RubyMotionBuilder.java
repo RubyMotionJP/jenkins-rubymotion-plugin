@@ -32,6 +32,7 @@ public class RubyMotionBuilder extends Builder {
     private final boolean outputResult;
     private final String deviceName;
     private final String simulatorVersion;
+    private final String envVars;
 
     private transient RubyMotionCommandLauncher cmdLauncher = null;
 
@@ -39,7 +40,7 @@ public class RubyMotionBuilder extends Builder {
     @DataBoundConstructor
     public RubyMotionBuilder(String platform, String rakeTask, String outputStyle, String outputFileName,
                              boolean useBundler, boolean installCocoaPods, boolean needClean, boolean outputResult,
-                             String deviceName, String simulatorVersion) {
+                             String deviceName, String simulatorVersion, String envVars) {
         this.platform = platform;
         this.rakeTask = rakeTask;
         this.outputStyle = outputStyle;
@@ -50,6 +51,7 @@ public class RubyMotionBuilder extends Builder {
         this.outputResult = outputResult;
         this.deviceName = deviceName;
         this.simulatorVersion = simulatorVersion;
+        this.envVars = envVars;
     }
 
     public String getPlatform() {
@@ -70,6 +72,10 @@ public class RubyMotionBuilder extends Builder {
 
     public String getSimulatorVersion() {
         return simulatorVersion;
+    }
+
+    public String getEnvVars() {
+        return envVars;
     }
 
     public String getOutputFileName() {
@@ -113,7 +119,7 @@ public class RubyMotionBuilder extends Builder {
             if (useBundler) {
                 cmds = "bundle exec ";
             }
-            cmds = cmds + "rake clean:all";
+            cmds = cmds + "rake clean:all " + envVars;
             result = cmdLauncher.exec(cmds);
             if (!result) {
                 return false;
@@ -164,7 +170,7 @@ public class RubyMotionBuilder extends Builder {
         }
 
         cmds = cmds + rakeTask;
-        cmds = cmds + " output=" + outputStyle;
+        cmds = cmds + " output=" + outputStyle + " " + envVars;
 
         OutputStream outputStream;
         try {
@@ -190,7 +196,7 @@ public class RubyMotionBuilder extends Builder {
         if (simulatorVersion != null && simulatorVersion.length() > 0) {
             cmds = cmds + " target=" + simulatorVersion;
         }
-        cmds = cmds + " output=" + outputStyle;
+        cmds = cmds + " output=" + outputStyle + " " + envVars;
 
         String output = cmdLauncher.getProjectWorkspace() + "/" + outputFileName;
         String error  = cmdLauncher.getProjectWorkspace() + "/.jenkins-error";
