@@ -51,7 +51,7 @@ public class RubyMotionBuilder extends Builder {
         this.outputResult = outputResult;
         this.deviceName = deviceName;
         this.simulatorVersion = simulatorVersion;
-        this.envVars = envVars;
+	this.envVars = envVars;
     }
 
     public String getPlatform() {
@@ -119,7 +119,10 @@ public class RubyMotionBuilder extends Builder {
             if (useBundler) {
                 cmds = "bundle exec ";
             }
-            cmds = cmds + "rake clean:all " + envVars;
+            cmds = cmds + "rake clean:all";
+	    if (envVars != null && envVars.length() > 0) {
+		cmds = cmds + " " + envVars;
+	    }
             result = cmdLauncher.exec(cmds);
             if (!result) {
                 return false;
@@ -170,7 +173,10 @@ public class RubyMotionBuilder extends Builder {
         }
 
         cmds = cmds + rakeTask;
-        cmds = cmds + " output=" + outputStyle + " " + envVars;
+        cmds = cmds + " output=" + outputStyle;
+	if (envVars != null && envVars.length() > 0) {
+	    cmds = cmds + " " + envVars;
+	}
 
         OutputStream outputStream;
         try {
@@ -196,7 +202,10 @@ public class RubyMotionBuilder extends Builder {
         if (simulatorVersion != null && simulatorVersion.length() > 0) {
             cmds = cmds + " target=" + simulatorVersion;
         }
-        cmds = cmds + " output=" + outputStyle + " " + envVars;
+        cmds = cmds + " output=" + outputStyle;
+	if (envVars != null && envVars.length() > 0) {
+	    cmds = cmds + " " + envVars;
+	}
 
         String output = cmdLauncher.getProjectWorkspace() + "/" + outputFileName;
         String error  = cmdLauncher.getProjectWorkspace() + "/.jenkins-error";
