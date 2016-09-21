@@ -74,7 +74,7 @@ public class RubyMotionCommandLauncher {
             if (fp.exists()) {
                 fp.delete();
             }
-        } 
+        }
         catch (Exception e) {
         }
     }
