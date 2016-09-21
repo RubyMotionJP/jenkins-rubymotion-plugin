@@ -145,6 +145,8 @@ public class RubyMotionBuilder extends Builder {
         boolean success = false;
         if (platform.equals("ios") || platform.equals("tvos")) {
             success = execiOS();
+            cmdLauncher.exec("killall -KILL Simulator");
+            cmdLauncher.exec("killall -KILL com.apple.CoreSimulator.CoreSimulatorService");
         }
         else if (platform.equals("osx")) {
             success = execOSX();
