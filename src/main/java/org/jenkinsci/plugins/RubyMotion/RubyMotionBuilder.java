@@ -17,6 +17,7 @@ import org.kohsuke.stapler.QueryParameter;
 
 import javax.servlet.ServletException;
 import java.io.*;
+import java.util.regex.*;
 
 import org.jenkinsci.plugins.RubyMotion.RubyMotionCommandLauncher;
 
@@ -249,16 +250,9 @@ public class RubyMotionBuilder extends Builder {
         if (result == null) {
             return false;
         }
-
-        String lastLine = null;
-        int index = result.lastIndexOf("\n");
-        if (index != -1 && index != result.length()) {
-            lastLine = result.substring(index + 1);
-        }
-        if (lastLine == null) {
-            return false;
-        }
-        return lastLine.matches("^# \\d+ tests.+");
+        Pattern p = Pattern.compile("# \\d+ tests, \\d+ assertions, \\d+ failures, \\d+ errors");
+        Matcher m = p.matcher(result);
+        return m.find();
     }
 
     // Overridden for better type safety.
